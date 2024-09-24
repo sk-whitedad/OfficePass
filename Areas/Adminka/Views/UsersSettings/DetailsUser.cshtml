@@ -1,0 +1,59 @@
+﻿@model OfficePass.Domain.Entities.User
+
+@{
+    ViewData["Title"] = $"Информация о пользователе {Model.Login}";
+}
+
+<h3>Информация о пользователе @Model.Login</h3>
+<div>
+    <hr />
+    <dl class="row">
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Login)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Login)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Role)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Role.Name)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.UserProfile.Lastname)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.UserProfile.Lastname)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.UserProfile.Firstname)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.UserProfile.Firstname)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.UserProfile.Surname)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.UserProfile.Surname)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.UserProfile.Group)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.UserProfile.Group)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.UserProfile.Specialization)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.UserProfile.Specialization)
+        </dd>
+    </dl>
+    
+        <p style="padding: 20px">
+        <input type='button' asp-area="Adminka" value='Править' asp-action="EditUser" onclick='window.location = "@Url.Action("EditUser")/@Model.Id";' />
+        <input type='button' asp-area="Adminka" value='Отменить' asp-action="Index" asp-controller="UsersSettings" onclick='window.location = "@Url.Action("Index")";' />
+        </p>
+</div>

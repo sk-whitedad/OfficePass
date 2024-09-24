@@ -1,0 +1,42 @@
+﻿@model IEnumerable<OfficePass.Domain.Entities.User>
+
+@{
+    ViewData["Title"] = "Пользователи";
+}
+<h2>@ViewData["Error"]</h2>
+<h1 class="header-text-top">Пользователи</h1>
+
+<hr />
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Login)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Role)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Login)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Role.Name)
+            </td>
+            <td>
+                <a asp-action="EditUser" asp-route-id="@item.Id">Править</a> |
+                <a asp-action="DetailsUser" asp-route-id="@item.Id">Инфо</a> |
+                <a asp-action="DeleteUser" asp-route-id="@item.Id">Удалить</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>
+<div>
+    <input type='button' asp-area="Adminka" value='Создать пользователя' onclick='window.location = "@Url.Action("AddUser","UsersSettings") ";' />
+</div>

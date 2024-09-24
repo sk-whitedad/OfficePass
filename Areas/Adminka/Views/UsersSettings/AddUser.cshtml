@@ -1,0 +1,81 @@
+﻿@model OfficePass.Areas.Adminka.Models.AddUserViewModel
+@{
+    ViewData["Title"] = "Пользователи";
+}
+
+<style>
+    table {
+        width: 100%; /* Ширина таблицы */
+    }
+
+    td {
+        padding: 20px; /* Поля в ячейках */
+        vertical-align: top; /* Выравнивание по верхнему краю ячеек */
+    }
+</style>
+<h2>@ViewData["Error"]</h2>
+<h1 class="header-text-top">Добавление нового пользователя</h1>
+
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <div class="form">
+            <form method="post" asp-area="Adminka" asp-action="AddUser" asp-controller="UsersSettings">
+                <div asp-validation-summary="All"></div>
+                <table>
+                    <tr style="vertical-align:top">
+                        <td>
+                            <p>
+                                <label asp-for="Login"></label><br />
+                                <input asp-for="Login" placeholder="" value="">
+                            </p>
+                            <p>
+                                <label asp-for="Password"></label><br />
+                                <input asp-for="Password" placeholder="" value="">
+                            </p>
+                            <p>
+                                <label asp-for="ConfirmPassword"></label><br />
+                                <input asp-for="ConfirmPassword" placeholder="">
+                            </p>
+                            <p>
+                                <label asp-for="Role"></label><br />
+                                <select name="SelectedItem" asp-items="@ViewBag.SelectItems"></select>
+                            </p>
+                        </td>
+                        <td style="vertical-align:top">
+                            <p>
+                                <label asp-for="UserProfile.Lastname"></label><br />
+                                <input asp-for="UserProfile.Lastname" placeholder="">
+                            </p>
+                            <p>
+                                <label asp-for="UserProfile.Firstname"></label><br />
+                                <input asp-for="UserProfile.Firstname" placeholder="">
+                            </p>
+                            <p>
+                                <label asp-for="UserProfile.Surname"></label><br />
+                                <input asp-for="UserProfile.Surname" placeholder="">
+                            </p>
+                        </td>
+                        <td>
+                            <p>
+                                <label asp-for="UserProfile.Specialization"></label><br />
+                                <input asp-for="UserProfile.Specialization" placeholder="">
+                            </p>
+                            <p>
+                                <label asp-for="UserProfile.Group"></label><br />
+                                <input asp-for="UserProfile.Group" placeholder="">
+                            </p>
+                        </td>
+
+                    </tr>
+                </table>
+                
+                <p style="padding: 20px">
+                    <input type="submit" value="Сохранить" />
+                    <input type='button' asp-area="Adminka" value='Отменить' onclick='window.location = "@Url.Action("Index","UsersSettings") ";' />
+                </p>
+            </form>
+
+        </div>
+    </div>
+</div>

@@ -1,0 +1,49 @@
+﻿@model OfficePass.Domain.Entities.User
+
+@{
+    ViewData["Title"] = $"Удаление пользователя {Model.Login}";
+}
+
+<h3>Вы желаете удалить пользователя?</h3>
+<div>
+    <hr />
+    <dl class="row">
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Login)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Login)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Role)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Role.Name)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.UserProfile.Lastname)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.UserProfile.Lastname)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.UserProfile.Firstname)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.UserProfile.Firstname)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.UserProfile.Surname)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.UserProfile.Surname)
+        </dd>
+    </dl>
+    
+    <form asp-action="DeleteUser">
+        <p style="padding: 20px">
+            <input type="submit" value="Удалить"/>
+            <input type='button' asp-area="Adminka" value='Отменить' onclick='window.location = "@Url.Action("Index")";' />
+        </p>
+    </form>
+</div>
