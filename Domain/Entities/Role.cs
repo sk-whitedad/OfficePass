@@ -1,7 +1,10 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.VisualStudio.Web.CodeGenerators.Mvc.Templates.BlazorIdentity.Pages;
+using System.ComponentModel.DataAnnotations;
 
 namespace OfficePass.Domain.Entities
 {
+    [Index(propertyNames: nameof(Name), IsUnique = true)]
     public partial class Role
     {
         [Required]

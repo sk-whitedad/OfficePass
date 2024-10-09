@@ -5,21 +5,18 @@ using System.ComponentModel.DataAnnotations;
 namespace OfficePass.Domain.Entities
 {
     [Index(propertyNames: nameof(Name), IsUnique = true)]
-    public partial class Company
+    public class Specialization
     {
         [Required]
         public int Id { get; set; }
 
         [Required]
-        [Display(Name = "Название")]
+        [Display(Name = "Должность")]
         public string Name { get; set; }
 
-        [Display(Name = "Адрес")]
-        public string? Address { get; set; }
+        [Display(Name = "Описание")]
+        public string? Description { get; set; }
 
-        [Display(Name = "Телефон")]
-        public string? PhoneNumber { get; set; }
-
-        public List<Guest> Guests { get; set; }
+        public List<UserProfile> UserProfiles { get; set; }
     }
 }

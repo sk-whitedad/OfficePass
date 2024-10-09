@@ -1,0 +1,52 @@
+﻿@model OfficePass.Models.CompanyViewModel
+@{
+    ViewData["Title"] = "Компания";
+}
+
+<style>
+    table {
+        width: 100%; /* Ширина таблицы */
+    }
+
+    td {
+        padding: 20px; /* Поля в ячейках */
+        vertical-align: top; /* Выравнивание по верхнему краю ячеек */
+    }
+</style>
+<h2>@ViewData["Error"]</h2>
+<h1 class="header-text-top">Редактирование компании</h1>
+
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <div class="form">
+            <form method="post" asp-action="EditCompany" asp-controller="Company">
+                <div asp-validation-summary="All"></div>
+                <table>
+                    <tr style="vertical-align:top">
+                        <td>
+                            <p>
+                                <label asp-for="Name"></label><br/>
+                                <input asp-for="Name" placeholder="">
+                            </p>
+                            <p>
+                                <label asp-for="Address"></label><br/>
+                                <input asp-for="Address" placeholder=""/>
+                            </p>
+                            <p>
+                                <label asp-for="PhoneNumber"></label><br/>
+                                <input asp-for="PhoneNumber" placeholder="">
+                            </p>
+                        </td>
+                    </tr>
+                </table>
+                
+                <p style="padding: 20px">
+                    <input type="submit" value="Сохранить" />
+                    <input type='button' value='Отменить' onclick='window.location = "@Url.Action("Index","Company") ";' />
+                </p>
+            </form>
+
+        </div>
+    </div>
+</div>

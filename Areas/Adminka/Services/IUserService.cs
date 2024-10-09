@@ -15,5 +15,10 @@ namespace OfficePass.Areas.Adminka.Services
         Task <IBaseResponse<bool>> DeleteUser(int id);
 
         Task<IBaseResponse<bool>> UpdateUser(User model);
+
+        Task<IBaseResponse<bool>> DublicateUser(string login);
+
+        Task<IBaseResponse<bool>> DublicateUserProfile(int id);
+
     }
 }

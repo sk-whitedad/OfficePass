@@ -1,0 +1,78 @@
+﻿@model OfficePass.Areas.Adminka.Models.AddUserProfileViewModel
+@{
+    ViewData["Title"] = "Сотрудники";
+}
+
+<style>
+    table {
+        width: 100%; /* Ширина таблицы */
+    }
+
+    td {
+        padding: 20px; /* Поля в ячейках */
+        vertical-align: top; /* Выравнивание по верхнему краю ячеек */
+    }
+</style>
+<span style="color:red">@ViewData["Error"]</span>
+<h1 class="header-text-top">Добавление нового сотрудника</h1>
+
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <div class="form">
+            <form method="post" asp-area="Adminka" asp-action="AddUserProfile" asp-controller="UserProfile">
+                <div asp-validation-summary="All"></div>
+                <table>
+                    <tr style="vertical-align:top">
+                        <td>
+                            <p>
+                                <label asp-for="Lastname"></label><br />
+                                <input asp-for="Lastname" value="" />
+                            </p>
+                            <p>
+                                <label asp-for="Firstname"></label><br />
+                                <input asp-for="Firstname" value="" />
+                            </p>
+                            <p>
+                                <label asp-for="Surname"></label><br />
+                                <input asp-for="Surname" value="" />
+                            </p>
+                            <p>
+                                <label asp-for="PhoneNumber"></label><br />
+                                <input asp-for="PhoneNumber" value="" />
+                            </p>
+                            <p>
+                                <label asp-for="GroupId"></label><br />
+                                <select asp-for="GroupId" asp-items="@ViewBag.SelectItemsGroup">
+                                    <option selected=""></option>
+                                </select>
+                            </p>
+                            <p>
+                                <label asp-for="SpecializationId"></label><br />
+                                <select asp-for="SpecializationId" asp-items="ViewBag.SelectItemsSpecialization">
+                                    <option selected=""></option>
+                                </select>
+                            </p>
+                            <p>
+                                <input type="checkbox" asp-for="IsBoss" value="true" checked="@Model.IsBoss" id="first"><label for="first" style="margin-left:5px">Является руководителем</label><br />
+                            </p>
+
+                        </td>
+                    </tr>
+                </table>
+
+                <p style="padding: 20px">
+                    <input type="submit" value="Сохранить" />
+                    <input type='button' asp-area="Adminka" value='Отменить' onclick='window.location = "@Url.Action("Index","UserProfile") ";' />
+                </p>
+            </form>
+
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

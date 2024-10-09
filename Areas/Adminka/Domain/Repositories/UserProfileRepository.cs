@@ -27,19 +27,24 @@ namespace OfficePass.Areas.Adminka.Domain.Repositories
 
         public async Task<bool> Update(UserProfile entity)
         {
-            var userProfile = await dbcontext.UserProfiles.FirstOrDefaultAsync(x => x.Id == entity.Id);
-            if (userProfile != null)
+            var model = await dbcontext.UserProfiles.FirstOrDefaultAsync(x => x.Id == entity.Id);
+            if (model != null)
             {
-                userProfile.Firstname = entity.Firstname;
-                userProfile.Lastname = entity.Lastname;
-                userProfile.Surname = entity.Surname;
-                userProfile.Group = entity.Group;
-                userProfile.Specialization = entity.Specialization;
+                model.Firstname = entity.Firstname;
+                model.Lastname = entity.Lastname;
+                model.Surname = entity.Surname;
+                model.Group = entity.Group;
+                model.GroupId = entity.GroupId;
                 await dbcontext.SaveChangesAsync();
                 return true;
             }
             return false;
         }
 
+        public async Task Delete(UserProfile entity)
+        {
+            dbcontext.UserProfiles.Remove(entity);
+            await dbcontext.SaveChangesAsync();
+        }
     }
 }

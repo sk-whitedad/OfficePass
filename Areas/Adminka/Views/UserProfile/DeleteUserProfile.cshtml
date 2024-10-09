@@ -1,0 +1,37 @@
+﻿@model OfficePass.Areas.Adminka.Models.UserProfileViewModel
+
+@{
+    ViewData["Title"] = $"Сотрудники";
+}
+
+<h3>Вы желаете удалить сотрудника?</h3>
+<div>
+    <hr />
+    <dl class="row">
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.FullName)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.FullName)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Specialization)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Specialization)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Group)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Group)
+        </dd>
+    </dl>
+    
+    <form asp-action="DeleteUserProfile">
+        <p style="padding: 20px">
+            <input type="submit" value="Удалить"/>
+            <input type='button' asp-area="Adminka" value='Отменить' onclick='window.location = "@Url.Action("Index")";' />
+        </p>
+    </form>
+</div>

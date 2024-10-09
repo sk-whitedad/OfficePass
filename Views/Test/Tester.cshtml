@@ -1,0 +1,42 @@
+﻿@model OfficePass.Areas.Adminka.Models.AddUserViewModel
+@{
+    ViewData["Title"] = "Конец теста";
+}
+
+<style>
+    table {
+        width: 100%; /* Ширина таблицы */
+    }
+
+    td {
+        padding: 20px; /* Поля в ячейках */
+        vertical-align: top; /* Выравнивание по верхнему краю ячеек */
+    }
+</style>
+<h2>@ViewData["Error"]</h2>
+<h1 class="header-text-top">Конец теста</h1>
+
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <div class="form">
+            <form method="post" asp-action="Tester" asp-controller="Test">
+                <div asp-validation-summary="All"></div>
+                <table>
+                    <tr style="vertical-align:top">
+                        <td>
+                            <p>
+                                <select asp-for="RoleId" asp-items="ViewBag.Roles"></select>
+                            </p>
+                        </td>
+                    </tr>
+                </table>
+                
+                <p>
+                    <input type="submit" value="Сохранить" />
+                </p>
+            </form>
+
+        </div>
+    </div>
+</div>

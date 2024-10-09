@@ -6,28 +6,27 @@ namespace OfficePass.Areas.Adminka.Models
 {
 	public class AddUserViewModel
 	{
-		public int Id {  get; set; }
+        [Required (ErrorMessage ="Выберите сотрудника")]
+        [Display(Name = "Пользователь")]
+        public int UserProfileId { get; set; }
 
-		[Required]
-		[Display(Name = "Логин")]
-		public string Login { get; set; }
+        [Required(ErrorMessage = "Введите логин")]
+        [Display(Name = "Логин")]
+        public string Login { get; set; }
 
-		[Required]
-		[DataType(DataType.Password)]
-		[Display(Name = "Пароль")]
-		public string Password { get; set; } = "123";
+        [Required(ErrorMessage = "Введите пароль")]
+        [DataType(DataType.Password)]
+        [Display(Name = "Пароль")]
+        public string? Password { get; set; }
 
-        [Required]
         [DataType(DataType.Password)]
         [Display(Name = "Повторите пароль")]
-        public string ConfirmPassword { get; set; } = "123";
+        [Compare("Password", ErrorMessage = "Пароли не совпадают")]
+        public string? ConfirmPassword { get; set; }
 
+        [Required(ErrorMessage = "Выберите права доступа")]
+        [Display(Name = "Права")]
+        public int RoleId { get; set; }
 
-        [Required]
-		[Display(Name ="Роль")]
-		public string Role { get; set; }
-
-        [Display(Name = "Профиль")]
-		public UserProfile UserProfile { get; set; }
     }
 }

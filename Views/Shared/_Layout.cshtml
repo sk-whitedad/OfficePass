@@ -6,7 +6,6 @@
     <title>@ViewData["Title"] - Бюро пропусков</title>
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
-    <link rel="stylesheet" href="~/MyPhotoDreamApp.styles.css" asp-append-version="true" />
 </head>
 <body>
     <header>
@@ -31,7 +30,10 @@
                             @if (User.IsInRole("Admin"))
                             {
                                 <li>
-                                    <a class="nav-link" asp-area="Adminka" asp-controller="UsersSettings" asp-action="Index">Пользователи</a>
+                                    <a class="nav-link" asp-area="Adminka" asp-controller="User" asp-action="Index">Пользователи</a>
+                                </li>
+                                <li>
+                                    <a class="nav-link" asp-area="Adminka" asp-controller="UserProfile" asp-action="Index">Сотрудники</a>
                                 </li>
                                 <li>
                                     <a class="nav-link" asp-area="" asp-controller="Guests" asp-action="Index">Посетители</a>
@@ -41,9 +43,6 @@
                                 </li>
                                 <li>
                                     <a class="nav-link" asp-area="" asp-controller="Groupp" asp-action="Index">Подразделения</a>
-                                </li>
-                                <li>
-                                    <a class="nav-link" asp-area="" asp-controller="Manager" asp-action="Index">Руководители</a>
                                 </li>
                                 <li>
                                     <a class="nav-link" asp-area="" asp-controller="Setting" asp-action="Index">Настройки</a>

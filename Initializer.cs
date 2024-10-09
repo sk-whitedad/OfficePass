@@ -12,10 +12,13 @@ namespace OfficePass
         public static void InitializeRepositories(this IServiceCollection services)
         {
             services.AddScoped<LoginRepository>();
-            services.AddScoped<UsersSettingsRepository>();
+            services.AddScoped<UserRepository>();
             services.AddScoped<RoleRepository>();
             services.AddScoped<UserProfileRepository>();
             services.AddScoped<CompanyRepository>();
+            services.AddScoped<GroupRepository>();
+            services.AddScoped<SpecializationRepository>();
+
         }
 
         public static void InitializeServices(this IServiceCollection services)
@@ -25,6 +28,8 @@ namespace OfficePass
             services.AddScoped<IRoleService, RoleService>();
             services.AddScoped<IUserProfileService, UserProfileService>();
             services.AddScoped<ICompanyService, CompanyService>();
+            services.AddScoped<IGroupService, GroupService>();
+            services.AddScoped<ISpecializationService, SpecializationService>();
         }
     }
 }

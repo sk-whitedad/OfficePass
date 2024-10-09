@@ -1,9 +1,9 @@
-﻿@model IEnumerable<OfficePass.Domain.Entities.User>
+﻿@model IEnumerable<OfficePass.Areas.Adminka.Models.UserViewModel>
 
 @{
     ViewData["Title"] = "Пользователи";
 }
-<h2>@ViewData["Error"]</h2>
+<span style="color:brown">@ViewData["Error"]</span>
 <h1 class="header-text-top">Пользователи</h1>
 
 <hr />
@@ -14,6 +14,9 @@
                 @Html.DisplayNameFor(model => model.Login)
             </th>
             <th>
+                @Html.DisplayNameFor(model => model.UserProfile)
+            </th>
+            <th>
                 @Html.DisplayNameFor(model => model.Role)
             </th>
             <th></th>
@@ -22,10 +25,13 @@
     <tbody>
 @foreach (var item in Model) {
         <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.Login)
-            </td>
-            <td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Login)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.UserProfile)
+                </td>
+                <td>
                 @Html.DisplayFor(modelItem => item.Role.Name)
             </td>
             <td>
@@ -38,5 +44,5 @@
     </tbody>
 </table>
 <div>
-    <input type='button' asp-area="Adminka" value='Создать пользователя' onclick='window.location = "@Url.Action("AddUser","UsersSettings") ";' />
+    <input type='button' asp-area="Adminka" value='Создать пользователя' onclick='window.location = "@Url.Action("AddUser","User") ";' />
 </div>

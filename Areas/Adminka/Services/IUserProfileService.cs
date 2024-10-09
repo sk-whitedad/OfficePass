@@ -10,5 +10,9 @@ namespace OfficePass.Areas.Adminka.Services
         Task<IBaseResponse<UserProfile>> CreateUserProfile(UserProfile model);
 
         Task<IBaseResponse<bool>> UpdateUserProfile(int id, UserProfile model);
+
+        IBaseResponse<UserProfile> GetUserProfileById(int id);
+
+        Task<IBaseResponse<bool>> DeleteUserProfile(int id);
     }
 }

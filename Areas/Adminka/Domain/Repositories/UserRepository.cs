@@ -5,11 +5,11 @@ using OfficePass.Domain.Entities;
 
 namespace OfficePass.Areas.Adminka.Domain.Repositories
 {
-    public class UsersSettingsRepository
+    public class UserRepository
     {
         private readonly OfficepassdbContext dbcontext;
 
-        public UsersSettingsRepository(OfficepassdbContext dbcontext)
+        public UserRepository(OfficepassdbContext dbcontext)
         {
             if (dbcontext == null) throw new ArgumentNullException("dbcontext");
             this.dbcontext = dbcontext;
@@ -44,6 +44,5 @@ namespace OfficePass.Areas.Adminka.Domain.Repositories
             }
             return false;
         }
-
     }
 }

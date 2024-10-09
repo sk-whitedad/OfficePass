@@ -1,4 +1,5 @@
-﻿using OfficePass.Areas.Adminka.Domain.Repositories;
+﻿using Microsoft.EntityFrameworkCore;
+using OfficePass.Areas.Adminka.Domain.Repositories;
 using OfficePass.Domain.Entities;
 using OfficePass.Domain.Repositories.Abstract;
 using OfficePass.Enums;
@@ -24,15 +25,17 @@ namespace OfficePass.Areas.Adminka.Services
                     Firstname = model.Firstname,
                     Lastname = model.Lastname,
                     Surname = model.Surname,
-                    Specialization = model.Specialization,
-                    Group = model.Group,
-                    User = model.User,
+                    PhoneNumber = model.PhoneNumber,
+                    GroupId = model.GroupId,
+                    SpecializationId = model.SpecializationId,
+                    IsBoss = model.IsBoss,
                 };
                 await userProfileRepository.Create(userProfile);
                 return new BaseResponse<UserProfile>()
                 {
                     StatusCode = StatusCode.OK,
-                    Data = userProfile
+                    Data = userProfile,
+                    Description = $"Сотрудник успешно добавлен"
                 };
 
             }
@@ -46,16 +49,20 @@ namespace OfficePass.Areas.Adminka.Services
             }
         }
 
-        public IBaseResponse<List<UserProfile>> GetUserProfiles()
+        public  IBaseResponse<List<UserProfile>> GetUserProfiles()
         {
             try
             {
-                var userProfiles = userProfileRepository.GetAll().ToList();
+                var userProfiles = userProfileRepository.GetAll()
+                    .Include(x => x.Specialization)
+                    .Include(x => x.Group)
+                    .Include(x => x.User)
+                    .ToList();
                 if (userProfiles == null)
                 {
                     return new BaseResponse<List<UserProfile>>
                     {
-                        Description = "Профили не обнаружены",
+                        Description = "Сотрудники не обнаружены",
                         StatusCode = Enums.StatusCode.NotFound
                     };
                 }
@@ -80,35 +87,35 @@ namespace OfficePass.Areas.Adminka.Services
         {
             try
             {
-                var userProfile = userProfileRepository.GetAll().FirstOrDefault(x => x.UserId == id);
+                var userProfile = userProfileRepository.GetAll().FirstOrDefault(x => x.Id == id);
                 if (userProfile == null)
-                {
                     return new BaseResponse<bool>()
                     {
                         Data = false,
                         StatusCode = StatusCode.NotFound,
-                        Description = "Профиль пользователя не найден"
+                        Description = "Профиль сотрудника не найден"
                     };
-                }
-
                 userProfile.Firstname = model.Firstname;
                 userProfile.Lastname = model.Lastname;
                 userProfile.Surname = model.Surname;
-                userProfile.Group = model.Group;
-                userProfile.Specialization = model.Specialization;
-
+                userProfile.PhoneNumber = model.PhoneNumber;
+                userProfile.GroupId = model.GroupId;
+                userProfile.SpecializationId = model.SpecializationId;
+                userProfile.IsBoss = model.IsBoss;
                 var result = await userProfileRepository.Update(userProfile);
                 if (result)
                     return new BaseResponse<bool>()
                     {
                         Data = true,
-                        StatusCode = StatusCode.OK
+                        StatusCode = StatusCode.OK,
+                        Description = "Профиль сотрудника успешно изменен"
                     };
                 else
                     return new BaseResponse<bool>()
                     {
                         Data = false,
-                        StatusCode = StatusCode.UpdateDBError
+                        StatusCode = StatusCode.UpdateDBError,
+                        Description = "Ошибка базы данных при запросе"
                     };
             }
             catch (Exception ex)
@@ -121,5 +128,71 @@ namespace OfficePass.Areas.Adminka.Services
                 };
             }
         }
+
+        public IBaseResponse<UserProfile> GetUserProfileById(int id)
+        {
+            try
+            {
+                var userProfile = userProfileRepository.GetAll()
+                    .Include(x => x.Group)
+                    .Include(x => x.Specialization)
+                    .FirstOrDefault(x => x.Id == id);
+                if (userProfile == null)
+                {
+                    return new BaseResponse<UserProfile>()
+                    {
+                        StatusCode = StatusCode.NotFound,
+                        Description = "Сотрудник не найден"
+                    };
+                }
+                return new BaseResponse<UserProfile>()
+                {
+                    StatusCode = StatusCode.OK,
+                    Data = userProfile
+                };
+            }
+            catch (Exception ex)
+            {
+                return new BaseResponse<UserProfile>()
+                {
+                    StatusCode = StatusCode.InternalServerError,
+                    Description = $"[GetUserById]: {ex.Message}"
+                };
+            }
+        }
+
+        public async Task<IBaseResponse<bool>> DeleteUserProfile(int id)
+        {
+            try
+            {
+                var user = userProfileRepository.GetAll().FirstOrDefault(x => x.Id == id);
+                if (user == null)
+                {
+                    return new BaseResponse<bool>()
+                    {
+                        Data = false,
+                        StatusCode = StatusCode.NotFound,
+                        Description = "Сотрудник не найден"
+                    };
+                }
+
+                await userProfileRepository.Delete(user);
+                return new BaseResponse<bool>()
+                {
+                    Data = true,
+                    StatusCode = StatusCode.OK,
+                    Description = $"Сотрудник успешно удален"
+                };
+            }
+            catch (Exception ex)
+            {
+                return new BaseResponse<bool>()
+                {
+                    StatusCode = StatusCode.InternalServerError,
+                    Description = $"[DeleteUser]: {ex.Message}"
+                };
+            }
+        }
+
     }
 }

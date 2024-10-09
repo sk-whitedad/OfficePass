@@ -1,0 +1,66 @@
+﻿@model IEnumerable<OfficePass.Areas.Adminka.Models.UserProfileViewModel>
+
+@{
+    ViewData["Title"] = "Сотрудники";
+}
+<span style="color:brown">@ViewData["Error"]</span>
+<h1 class="header-text-top">Сотрудники</h1>
+
+<hr />
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.FullName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Login)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Group)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Specialization)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.PhoneNumber)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.IsBoss)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        
+        @foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.FullName)
+            </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Login)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Group)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Specialization)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.PhoneNumber)
+                </td>
+                <td>
+                <input type="checkbox" disabled value="true" checked="@item.IsBoss" />
+            </td>
+            <td>
+                <a asp-action="EditUserProfile" asp-route-id="@item.Id">Править</a> |
+                <a asp-action="DeleteUserProfile" asp-route-id="@item.Id">Удалить</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>
+<div>
+    <input type='button' value='Добавить сотрудника' onclick='window.location = "@Url.Action("AddUserProfile","UserProfile") ";' />
+</div>

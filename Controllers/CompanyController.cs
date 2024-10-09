@@ -61,7 +61,7 @@ namespace OfficePass.Controllers
             return Redirect("Index");
         }
 
-       
+        [HttpPost]
         public IActionResult DeleteCompany(Company company)
         {
             var companyResponse = companyService.DeleteCompany(company.Id);
@@ -74,6 +74,47 @@ namespace OfficePass.Controllers
             {
                 return View("Index", responseCompany.Result.Data);
 
+            }
+            return RedirectToAction("Index", "Home");
+        }
+
+        [HttpGet]
+        public IActionResult EditCompany(int Id)
+        {
+            var companyResponse = companyService.GetCompanyById(Id);
+            if (companyResponse.StatusCode == Enums.StatusCode.OK)
+            {
+                var viewModel = new CompanyViewModel()
+                {
+                    Id = Id,
+                    Name = companyResponse.Data.Name,
+                    Address = companyResponse.Data.Address,
+                    PhoneNumber = companyResponse.Data.PhoneNumber,
+                };
+                return View(viewModel);
+            }
+            return Redirect("Index");
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> EditCompany(CompanyViewModel viewModel)
+        {
+            var company = new Company()
+            {
+                Id = viewModel.Id,
+                Name = viewModel.Name,
+                Address = viewModel.Address,
+                PhoneNumber = viewModel.PhoneNumber,   
+            };
+            var responseUpdateCompany = await companyService.UpdateCompany(company);
+
+            if (responseUpdateCompany.StatusCode == Enums.StatusCode.OK)
+            {
+                var responseCompany = await companyService.GetCompanies();
+                if (responseCompany.StatusCode == Enums.StatusCode.OK)
+                {
+                    return View("Index", responseCompany.Data);
+                }
             }
             return RedirectToAction("Index", "Home");
         }

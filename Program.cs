@@ -46,6 +46,6 @@ app.MapAreaControllerRoute(
 
 app.MapControllerRoute(
     name: "default",
-    pattern: "{controller=Account}/{action=Index}");
+    pattern: "{controller=Account}/{action=Index}/{id?}");
 
 app.Run();
