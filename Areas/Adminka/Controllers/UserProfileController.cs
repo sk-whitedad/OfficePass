@@ -105,6 +105,7 @@ namespace OfficePass.Area.Adminka.Controllers
                             PhoneNumber = viewModel.PhoneNumber,
                             SpecializationId = viewModel.SpecializationId,
                             GroupId = viewModel.GroupId,
+                            IsBoss = viewModel.IsBoss,
                         };
                         var respAddUserProfile = await userProfileService.CreateUserProfile(userProfile);
                         if (respAddUserProfile.StatusCode == Enums.StatusCode.OK)
@@ -152,58 +153,42 @@ namespace OfficePass.Area.Adminka.Controllers
         }
 
         [HttpGet]
-        public IActionResult EditUser(int Id, string? err)
+        public IActionResult EditUserProfile(int Id, string? err)
         {
             if (err != null) 
                ViewData["Error"] = err;
 
-            var response = userService.GetUserById(Id);
+            var response = userProfileService.GetUserProfileById(Id);
             if (response.StatusCode == Enums.StatusCode.OK)
             {
-                var viewModel = new EditUserViewModel()
+                var viewModel = new AddUserProfileViewModel()
                 {
                     Id = response.Data.Id,
-                    Login = response.Data.Login,
-                    UserProfileId = response.Data.UserProfile.Id,
-                    Lastname = response.Data.UserProfile.Lastname,
-                    Firstname = response.Data.UserProfile.Firstname,
-                    Surname = response.Data.UserProfile.Surname,
-                    RoleId = response.Data.RoleId,
-                    GroupId = response.Data.UserProfile.GroupId,
-                    SpecializationId = response.Data.UserProfile.SpecializationId,
-                    IsBoss = response.Data.UserProfile.IsBoss,
+                    Firstname = response.Data.Firstname,
+                    Lastname = response.Data.Lastname,
+                    Surname = response.Data.Surname,
+                    IsBoss = response.Data.IsBoss,
+                    PhoneNumber = response.Data.PhoneNumber,
+                    GroupId = response.Data.GroupId,
+                    SpecializationId = response.Data.SpecializationId,
                 };
 
                 var responseGroup = groupService.GetGroups();
                 var responseSpecialization = specializationService.GetSpecializations();
-                var responseRole = roleService.GetRoles();
  
-                if (responseGroup.Result.StatusCode == Enums.StatusCode.OK && responseSpecialization.StatusCode == Enums.StatusCode.OK)
+                if (responseGroup.Result.StatusCode == Enums.StatusCode.OK 
+                    && responseSpecialization.StatusCode == Enums.StatusCode.OK)
                 {
                     IEnumerable<Group> sourseGroup = responseGroup.Result.Data;
                     SelectList selectListGroup;
-                    if (response.Data.UserProfile.Group != null)
                         selectListGroup = new SelectList(sourseGroup, "Id", "Name");
-                    else
-                        selectListGroup = new SelectList(sourseGroup);
 
                     IEnumerable<Specialization> sourseSpecialization = responseSpecialization.Data;
                     SelectList selectListSpecialization;
-                    if (response.Data.UserProfile.Specialization != null)
                         selectListSpecialization = new SelectList(sourseSpecialization, "Id", "Name");
-                    else
-                        selectListSpecialization = new SelectList(sourseSpecialization);
-
-                    IEnumerable<Role> sourseRole = responseRole.Data;
-                    SelectList selectListRole;
-                    if (response.Data.Role != null)
-                        selectListRole = new SelectList(sourseRole, "Id", "Name");
-                    else
-                        selectListRole = new SelectList(sourseRole);
 
                     ViewBag.SelectItemsGroups = selectListGroup;
                     ViewBag.SelectItemsSpecialization = selectListSpecialization;
-                    ViewBag.SelectItemsRole = selectListRole;
                     return View(viewModel);
                 }
             }
@@ -211,45 +196,34 @@ namespace OfficePass.Area.Adminka.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> EditUser(EditUserViewModel viewModel)
+        public async Task<IActionResult> EditUserProfile(int id, AddUserProfileViewModel viewModel)
         {
             if (ModelState.IsValid)
             {
-                var user = new User()
-                {
-                    Id = viewModel.Id,
-                    Login = viewModel.Login,
-                    RoleId = viewModel.RoleId,
-                };
-                if (!String.IsNullOrEmpty(viewModel.Password))
-                    user.Password = HashPasswordHelper.HashPassowrd(viewModel.Password);
-
-                var responseUser = await userService.UpdateUser(user);
-
                 var userProfile = new UserProfile()
                 {
+                    Id = viewModel.Id,
                     Firstname = viewModel.Firstname,
                     Lastname = viewModel.Lastname,
                     Surname = viewModel.Surname,
-                    IsBoss = viewModel.IsBoss,
+                    PhoneNumber = viewModel.PhoneNumber,
                     GroupId = viewModel.GroupId,
                     SpecializationId = viewModel.SpecializationId,
+                    IsBoss = viewModel.IsBoss,
                 };
-                var responseProfile = await userProfileService.UpdateUserProfile(viewModel.UserProfileId, userProfile);
+                var responseUserProfile = await userProfileService.UpdateUserProfile(id, userProfile);
 
-                if (responseUser.StatusCode == Enums.StatusCode.OK
-                    && responseProfile.StatusCode == Enums.StatusCode.OK)
+                if (responseUserProfile.StatusCode == Enums.StatusCode.OK)
                 {
-                    //получаем всех юзеров из таблицы Users и Roles
-                    var response = await userService.GetUsers();
+                    var response = userProfileService.GetUserProfiles();
                     if (response.StatusCode == Enums.StatusCode.OK)
                     {
-                        return RedirectToAction("Index", "User", new { err = $"Информация: {responseUser.Description}" });
+                        return RedirectToAction("Index", "UserProfile", new { err = $"Информация: {responseUserProfile.Description}" });
                     }
                 }
-                return RedirectToAction("EditUser", "User", new { err = $"Ошибка: {responseUser.Description}, {responseProfile.Description}" });
+                return RedirectToAction("EditUserProfile", "UserProfile", new { err = $"Ошибка: {responseUserProfile.Description}" });
             }
-            return RedirectToAction("EditUser", "User", new { err = $"Ошибка валидации: Пароли не совпадают" });
+            return RedirectToAction("EditUserProfile", "UserProfile", new { err = $"Ошибка валидации" });
         }
     }
 }

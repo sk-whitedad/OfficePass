@@ -29,7 +29,8 @@ namespace OfficePass.Services
                 return new BaseResponse<Group>
                 {
                     StatusCode = StatusCode.OK,
-                    Data = _model
+                    Data = _model,
+                    Description = "Подразделение успешно создано"
                 };
             }
             catch (Exception ex)
@@ -53,7 +54,7 @@ namespace OfficePass.Services
                     {
                         Data = false,
                         StatusCode = StatusCode.NotFound,
-                        Description = "Цех или отдел не найден"
+                        Description = "Подразделение не найдено"
                     };
                 }
 
@@ -61,7 +62,8 @@ namespace OfficePass.Services
                 return new BaseResponse<bool>()
                 {
                     Data = true,
-                    StatusCode = StatusCode.OK
+                    StatusCode = StatusCode.OK,
+                    Description = $"Подразделение {_model.Name} успешно удалено"
                 };
             }
             catch (Exception ex)
@@ -146,7 +148,7 @@ namespace OfficePass.Services
                     {
                         Data = false,
                         StatusCode = StatusCode.NotFound,
-                        Description = "Цех или отдел не найден"
+                        Description = "Подразделение не найдено"
                     };
                 }
                 _model.Name = model.Name;
@@ -157,13 +159,15 @@ namespace OfficePass.Services
                     return new BaseResponse<bool>()
                     {
                         Data = true,
-                        StatusCode = StatusCode.OK
+                        StatusCode = StatusCode.OK,
+                        Description = $"Подразделение \"{_model.Name}\" успешно изменено"
                     };
                 else
                     return new BaseResponse<bool>()
                     {
                         Data = false,
-                        StatusCode = StatusCode.UpdateDBError
+                        StatusCode = StatusCode.UpdateDBError,
+                        Description = $"Возникли проблемы при изменении подразделения \"{_model.Name}\""
                     };
             }
             catch (Exception ex)

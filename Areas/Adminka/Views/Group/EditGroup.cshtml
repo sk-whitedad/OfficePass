@@ -1,0 +1,55 @@
+﻿@model OfficePass.Areas.Adminka.Models.GroupViewModel
+@{
+    ViewData["Title"] = "Подразделения";
+}
+
+<style>
+    table {
+        width: 100%; /* Ширина таблицы */
+    }
+
+    td {
+        padding: 20px; /* Поля в ячейках */
+        vertical-align: top; /* Выравнивание по верхнему краю ячеек */
+    }
+</style>
+<span style="color:brown">@ViewData["Error"]</span>
+<h1 class="header-text-top">Редактирование подразделения</h1>
+
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <div class="form">
+            <form method="post" asp-route-id="@Model.Id" asp-area="Adminka" asp-action="EditGroup" asp-controller="Group">
+                <div asp-validation-summary="All"></div>
+                <table>
+                    <tr style="vertical-align:top">
+                        <td>
+                            <p>
+                                <label asp-for="Name"></label><br />
+                                <input asp-for="Name" />
+                            </p>
+                            <p>
+                                <label asp-for="Description"></label><br />
+                                <input asp-for="Description" />
+                            </p>
+                        </td>
+                    </tr>
+                </table>
+                
+                <p style="padding: 20px">
+                    <input type="submit" value="Сохранить" />
+                    <input type='button' asp-area="Adminka" value='Отменить' onclick='window.location = "@Url.Action("Index","Group") ";' />
+                </p>
+            </form>
+
+        </div>
+    </div>
+</div>
+
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}
