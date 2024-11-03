@@ -87,11 +87,11 @@ namespace OfficePass.Area.Adminka.Controllers
                 IEnumerable<Specialization> sourseSpecialization = responseSpecialization.Data;
                 SelectList selectListSpecialization = new SelectList(sourseSpecialization, "Id", "Name");
 
-                IEnumerable<UserProfile> sourseUserProfile = responseUserProfile.Data;
-                foreach (var item in sourseUserProfile)
+                foreach (var item in responseUserProfile.Data)
                 {
                     item.Firstname = $"{item.Lastname} {item.Firstname} {item.Surname}";
                 }
+                var sourseUserProfile = responseUserProfile.Data.Where(x => x.User == null).ToList();
                 SelectList selectListUserProfile = new SelectList(sourseUserProfile, "Id", "Firstname");
 
                 ViewBag.SelectItemsRole = selectListRole;
@@ -289,6 +289,23 @@ namespace OfficePass.Area.Adminka.Controllers
                     Role = response.Data.Role
                 };
                 return View(viewModel);
+            }
+            return Redirect("Index");
+        }
+
+        public IActionResult DetailsModal(int id)
+        {
+            var response = userService.GetUserById(id);
+            if (response.StatusCode == Enums.StatusCode.OK)
+            {
+                var viewModel = new DetailUserViewModel
+                {
+                    Id = response.Data.Id,
+                    Login = response.Data.Login,
+                    UserProfile = response.Data.UserProfile,
+                    Role = response.Data.Role
+                };
+                return PartialView(viewModel);
             }
             return Redirect("Index");
         }

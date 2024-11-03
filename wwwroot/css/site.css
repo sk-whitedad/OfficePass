@@ -25,11 +25,13 @@ body {
     --bs-dark-rgb: 44, 74, 81;
 }
 
-
-.td-confirm-order {
-    text-align: center;
+.table {
+    border-left: 0px solid #016582;
 }
 
+div.container {
+    max-width: 1400px;
+}
 
 .navbar-brand {
     padding-top: 0.3125rem;
@@ -53,12 +55,10 @@ body {
         color: #017d9c;
     }
 
-
 .header-text-top {
     color: #008eb1;
     font-size: 2rem;
 }
-
 
 .navbar-light .navbar-brand:hover, .navbar-light .navbar-brand:focus {
     color: #41abc5;
@@ -74,200 +74,9 @@ body {
     color: rgba(var(--bs-dark-rgb), var(--bs-text-opacity)) !important;
 }
 
-
-
-
-
-
-
-table.iksweb {
-    width: 100%;
-    border-collapse: collapse;
-    border-spacing: 0;
-    height: auto;
-}
-
-    table.iksweb, table.iksweb td, table.iksweb th {
-        border: 1px solid #595959;
-    }
-
-        table.iksweb td, table.iksweb th {
-            min-height: 35px;
-            padding: 3px;
-            width: 100px;
-            height: 35px;
-        }
-
-        table.iksweb th {
-            background: #347c99;
-            color: #fff;
-            font-weight: normal;
-        }
-
 footer {
-    margin-top: 100px;
+    margin-top: 10px;
 }
-
-
-
-
-/*карточки товаров*/
-
-.cards {
-    display: grid;
-    /* Автоматически заполняем на всю ширину grid-контейнера */
-    grid-template-columns: repeat(auto-fill, 225px);
-    width: 100%;
-    max-width: 1000px; /* Ширина grid-контейнера */
-    justify-content: center;
-    justify-items: center; /* Размещаем карточку по центру */
-    column-gap: 30px; /* Отступ между колонками */
-    row-gap: 40px; /* Отступ между рядами */
-    margin: 0 auto;
-}
-
-
-
-.card {
-    width: 225px;
-    height: 280px;
-    box-shadow: 1px 2px 4px rgba(0, 0, 0, 0.1);
-    display: flex;
-    flex-direction: column; /* Размещаем элементы в колонку */
-    border-radius: 4px;
-    transition: 0.2s;
-    position: relative;
-}
-
-    /* При наведении на карточку - меняем цвет тени */
-    .card:hover {
-        box-shadow: 4px 8px 16px rgba(255, 102, 51, 0.2);
-    }
-
-.card__top {
-    flex: 0 0 145px; /* Задаем высоту 220px, запрещаем расширение и сужение по высоте */
-    position: relative;
-    overflow: hidden; /* Скрываем, что выходит за пределы */
-}
-
-/* Контейнер для картинки */
-.card__image {
-    display: block;
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-}
-
-    .card__image > img {
-        width: 100%;
-        height: 100%;
-        object-fit: contain; /* Встраиваем картинку в контейнер card__image */
-        transition: 0.2s;
-    }
-
-    /* При наведении - увеличиваем картинку */
-    .card__image:hover > img {
-        transform: scale(1.1);
-    }
-
-/* Размещаем скидку на товар относительно изображения */
-.card__label {
-    padding: 4px 8px;
-    position: absolute;
-    bottom: 10px;
-    left: 10px;
-    background: #ff6633;
-    border-radius: 4px;
-    font-weight: 400;
-    font-size: 16px;
-    color: #fff;
-}
-
-.card__bottom {
-    display: flex;
-    flex-direction: column;
-    flex: 1 0 auto; /* Занимаем всю оставшуюся высоту карточки */
-    padding: 10px;
-}
-
-.card__prices {
-    display: flex;
-    margin-bottom: 10px;
-    flex: 0 0 10%; /* Размещаем цены равномерно в две колонки */
-}
-
-.card__price::after {
-    content: "₽";
-    margin-left: 4px;
-    position: relative;
-}
-
-.card__price--discount {
-    font-weight: 700;
-    font-size: 19px;
-    color: #262626;
-    display: flex;
-    flex-wrap: wrap-reverse;
-}
-
-    .card__price--discount::before {
-        content: "Цена за 1шт.";
-        font-weight: 400;
-        font-size: 15px;
-        color: #262626;
-    }
-
-.card__price--common {
-    font-weight: 400;
-    font-size: 17px;
-    color: #606060;
-    display: flex;
-    flex-wrap: wrap-reverse;
-    justify-content: flex-end;
-}
-
-    .card__price--common::before {
-        content: "Обычная";
-        font-weight: 400;
-        font-size: 13px;
-        color: #bfbfbf;
-    }
-
-.card__title {
-    display: block;
-    margin-bottom: 10px;
-    font-weight: 400;
-    font-size: 17px;
-    line-height: 150%;
-    color: #414141;
-}
-
-    .card__title:hover {
-        color: #ff6633;
-    }
-
-.card__add {
-    display: block;
-    width: 100%;
-    font-weight: 400;
-    font-size: 17px;
-    color: #70c05b;
-    padding: 10px;
-    text-align: center;
-    border: 1px solid #70c05b;
-    border-radius: 7px;
-    cursor: pointer; /* Меняем курсор при наведении */
-    transition: 0.2s;
-    margin-top: 20px; /* Прижимаем кнопку к низу карточки */
-}
-
-    .card__add:hover {
-        border: 1px solid #ff6633;
-        background-color: #ff6633;
-        color: #fff;
-    }
 
 .user-name-header {
     font-size: 1rem;
@@ -276,6 +85,48 @@ footer {
     margin-right: 1rem;
 }
 
-.basket {
-    margin-right: 0.5rem;
+ul.nav {
+    margin-left: 0px;
+    padding-left: 0px;
+    list-style: none;
+}
+
+    ul.nav a {
+        display: block;
+        width: 11em;
+        padding: 10px;
+        background-color: #f7fbfd;
+        border-top: 1px dashed #016582;
+        border-right: 1px dashed #016582;
+        border-left: 5px solid #016582;
+        text-decoration: none;
+        color: #333;
+    }
+
+    ul.nav li:last-child a {
+        border-bottom: 1px dashed #333;
+    }
+
+    ul.nav a:hover {
+        background-color: #e0eef7;
+        color: #016582;
+    }
+
+#message {
+}
+
+#left_menu {
+    margin-top: 18px;
+    float: left;
+    width: 150px;
+}
+
+#content {
+    max-height: 500px;
+    overflow: auto;
+    margin-left: 170px;
+}
+
+#bottom_menu {
+    max-height: 70px;
 }

@@ -1,0 +1,71 @@
+﻿@model OfficePass.Areas.Adminka.Models.DetailUserViewModel
+<div class="modal-content">
+    <div class="modal-header">
+        <h4>Информация о пользователе</h4>
+    </div>
+    <div class="modal-body">
+        <table class="table">
+            <tr>
+                <td>
+                    @Html.DisplayNameFor(model => model.Login)
+                </td>
+                <td>
+                    @Html.DisplayFor(model => model.Login)
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    @Html.DisplayNameFor(model => model.Role.Name)
+                </td>
+                <td>
+                    @Html.DisplayFor(model => model.Role.Name)
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    @Html.DisplayNameFor(model => model.UserProfile.Lastname)
+                </td>
+                <td>
+                    @Html.DisplayFor(model => model.UserProfile.Lastname)
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    @Html.DisplayNameFor(model => model.UserProfile.Firstname)
+                </td>
+                <td>
+                    @Html.DisplayFor(model => model.UserProfile.Firstname)
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    @Html.DisplayNameFor(model => model.UserProfile.Surname)
+                </td>
+                <td>
+                    @Html.DisplayFor(model => model.UserProfile.Surname)
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    @Html.DisplayNameFor(model => model.UserProfile.Specialization.Name)
+                </td>
+                <td>
+                    @Html.DisplayFor(model => model.UserProfile.Specialization.Name)
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    @Html.DisplayNameFor(model => model.UserProfile.Group.Name)
+                </td>
+                <td>
+                    @Html.DisplayFor(model => model.UserProfile.Group.Name)
+                </td>
+            </tr>
+        </table>
+
+        <p style="padding: 20px">
+            <input type='button' asp-area="Adminka" value='Редактировать' onclick='window.location = "@Url.Action("EditUser","User", new{Id = Model.Id})";' />
+            <input type='button' asp-area="Adminka" value='Отменить' onclick='window.location = "@Url.Action("Index","User") ";' />
+        </p>
+    </div>
+</div>

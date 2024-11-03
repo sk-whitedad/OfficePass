@@ -1,0 +1,54 @@
+﻿@model OfficePass.Areas.Adminka.Models.SpecializationViewModel
+@{
+    ViewData["Title"] = "Должности";
+}
+
+<style>
+    table {
+        width: 100%; /* Ширина таблицы */
+    }
+
+    td {
+        padding: 20px; /* Поля в ячейках */
+        vertical-align: top; /* Выравнивание по верхнему краю ячеек */
+    }
+</style>
+<span style="color:brown">@ViewData["Error"]</span>
+<h1 class="header-text-top">Добавление новой должности</h1>
+
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <div class="form">
+            <form method="post" asp-area="Adminka" asp-action="AddSpecialization" asp-controller="Specialization">
+                <div asp-validation-summary="All"></div>
+                <table>
+                    <tr style="vertical-align:top">
+                        <td>
+                            <p>
+                                <label asp-for="Name"></label><br />
+                                <input asp-for="Name" value="" />
+                            </p>
+                            <p>
+                                <label asp-for="Description"></label><br />
+                                <input asp-for="Description" value="" />
+                            </p>
+                        </td>
+                    </tr>
+                </table>
+
+                <p style="padding: 20px">
+                    <input type="submit" value="Сохранить" />
+                    <input type='button' asp-area="Adminka" value='Отменить' onclick='window.location = "@Url.Action("Index","Specialization") ";' />
+                </p>
+            </form>
+
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

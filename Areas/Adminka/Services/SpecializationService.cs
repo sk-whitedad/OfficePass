@@ -4,7 +4,7 @@ using OfficePass.Domain.Repositories;
 using OfficePass.Domain.Repositories.Abstract;
 using OfficePass.Enums;
 
-namespace OfficePass.Services
+namespace OfficePass.Areas.Adminka.Services
 {
     public class SpecializationService : ISpecializationService
     {
@@ -29,7 +29,8 @@ namespace OfficePass.Services
                 return new BaseResponse<Specialization>
                 {
                     StatusCode = StatusCode.OK,
-                    Data = specialization
+                    Data = specialization,
+                    Description = "Новая должность успешно добавлена"
                 };
             }
             catch (Exception ex)
@@ -61,7 +62,8 @@ namespace OfficePass.Services
                 return new BaseResponse<bool>()
                 {
                     Data = true,
-                    StatusCode = StatusCode.OK
+                    StatusCode = StatusCode.OK,
+                    Description = "Должность успешно удалена"
                 };
             }
             catch (Exception ex)
@@ -156,13 +158,15 @@ namespace OfficePass.Services
                     return new BaseResponse<bool>()
                     {
                         Data = true,
-                        StatusCode = StatusCode.OK
+                        StatusCode = StatusCode.OK,
+                        Description = "Должность успешно изменена"
                     };
                 else
                     return new BaseResponse<bool>()
                     {
                         Data = false,
-                        StatusCode = StatusCode.UpdateDBError
+                        StatusCode = StatusCode.UpdateDBError,
+                        Description = "Не удалось изменить должность"
                     };
             }
             catch (Exception ex)

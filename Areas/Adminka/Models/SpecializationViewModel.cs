@@ -1,13 +1,13 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace OfficePass.Models
+namespace OfficePass.Areas.Adminka.Models
 {
     public class SpecializationViewModel
-    {
+    {   
         [Required]
         public int Id { get; set; }
 
-        [Required]
+        [Required(ErrorMessage = "Заполните поле Должность")]
         [Display(Name = "Должность")]
         public string Name { get; set; }
 

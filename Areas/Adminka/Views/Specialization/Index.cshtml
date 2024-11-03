@@ -1,12 +1,15 @@
-﻿@model IEnumerable<OfficePass.Models.SpecializationViewModel>
+﻿@model IEnumerable<OfficePass.Areas.Adminka.Models.SpecializationViewModel>
 
 @{
     ViewData["Title"] = "Должности";
 }
-<h2>@ViewData["Error"]</h2>
+<span style="color:brown">@ViewData["Error"]</span>
 <h1 class="header-text-top">Должности</h1>
 
 <hr />
+<div id="modDialog" class="modal fade">
+    <div id="dialogContent" class="modal-dialog"></div>
+</div>
 <table class="table">
     <thead>
         <tr>
@@ -29,7 +32,8 @@
             <td>
                 @Html.DisplayFor(modelItem => item.Description)
             </td>
-             <td>
+                <td>
+                    @Html.ActionLink("Инфо", "DetailsModal", new { id = item.Id }, new { @class = "specItem" }) |
                     <a asp-action="EditSpecialization" asp-route-id="@item.Id">Править</a> |
                     <a asp-action="DeleteSpecialization" asp-route-id="@item.Id">Удалить</a>
             </td>
@@ -40,3 +44,20 @@
 <div>
     <input type='button' value='Добавить должность' onclick='window.location = "@Url.Action("AddSpecialization","Specialization") ";' />
 </div>
+
+@section scripts
+{
+    <script type="text/javascript">
+
+        $(function () {
+            $.ajaxSetup({ cache: false });
+            $(".specItem").click(function (e) {
+                e.preventDefault();
+                $.get(this.href, function (data) {
+                    $('#dialogContent').html(data);
+                    $('#modDialog').modal('show');
+                });
+            });
+        })
+    </script>
+}

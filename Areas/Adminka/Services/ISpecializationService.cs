@@ -1,7 +1,7 @@
 ﻿using OfficePass.Domain.Entities;
 using OfficePass.Domain.Repositories.Abstract;
 
-namespace OfficePass.Services
+namespace OfficePass.Areas.Adminka.Services
 {
     public interface ISpecializationService
     {

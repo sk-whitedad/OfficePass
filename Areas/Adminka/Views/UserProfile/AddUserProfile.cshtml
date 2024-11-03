@@ -17,6 +17,7 @@
 <h1 class="header-text-top">Добавление нового сотрудника</h1>
 
 <hr />
+
 <div class="row">
     <div class="col-md-4">
         <div class="form">
@@ -52,6 +53,9 @@
                                 <select asp-for="SpecializationId" asp-items="ViewBag.SelectItemsSpecialization">
                                     <option selected=""></option>
                                 </select>
+                                <a asp-action="AddSpecialization" 
+                                asp-controller="Specialization" 
+                                > Добавить </a>
                             </p>
                             <p>
                                 <input type="checkbox" asp-for="IsBoss" value="true" checked="@Model.IsBoss" id="first"><label for="first" style="margin-left:5px">Является руководителем</label><br />
@@ -71,8 +75,11 @@
     </div>
 </div>
 
-@section Scripts {
+@section Scripts 
+{
     @{
         await Html.RenderPartialAsync("_ValidationScriptsPartial");
     }
+
 }
+
