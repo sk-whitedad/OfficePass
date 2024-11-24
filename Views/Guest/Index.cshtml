@@ -1,0 +1,60 @@
+﻿@model IEnumerable<OfficePass.Models.GuestViewModel>
+
+@{
+    ViewData["Title"] = "Посетители";
+}
+<h2>@ViewData["Error"]</h2>
+<h1 class="header-text-top">Посетители</h1>
+
+<hr />
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.FullName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.CompanyName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.DocumentType)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.DocumentSerial)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.DocumentNumber)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        
+        @foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.FullName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.CompanyName)
+            </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.DocumentType)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.DocumentSerial)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.DocumentNumber)
+                </td>
+                <td>
+                <a asp-action="EditGuest" asp-route-id="@item.Id">Править</a> |
+                    <a asp-action="DeleteGuest" asp-route-id="@item.Id">Удалить</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>
+<div>
+    <input type='button' value='Добавить посетителя' onclick='window.location = "@Url.Action("AddGuest","Guest") ";' />
+</div>

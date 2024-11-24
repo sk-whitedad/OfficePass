@@ -3,9 +3,19 @@
 @{
     ViewData["Title"] = "Должности";
 }
-<span style="color:brown">@ViewData["Error"]</span>
-<h1 class="header-text-top">Должности</h1>
+<div id="message">
+    <span style="color:brown">@ViewData["Error"]</span>
+    <h1 class="header-text-top">Должности</h1>
+</div>
+<div id="left_menu">
+    <ul class="nav">
+        <li><a asp-action="Index" asp-controller="Group">Подразделения</a></li>
+        <li><a asp-action="Index" asp-controller="UserProfile">Сотрудники</a></li>
+        <li><a asp-action="AddSpecialization" asp-controller="Specialization">Добавить должность</a></li>
+    </ul>
+</div>
 
+<div id="content">
 <hr />
 <div id="modDialog" class="modal fade">
     <div id="dialogContent" class="modal-dialog"></div>
@@ -41,8 +51,6 @@
 }
     </tbody>
 </table>
-<div>
-    <input type='button' value='Добавить должность' onclick='window.location = "@Url.Action("AddSpecialization","Specialization") ";' />
 </div>
 
 @section scripts

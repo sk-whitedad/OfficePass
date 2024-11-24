@@ -1,0 +1,77 @@
+﻿@model OfficePass.Models.GuestViewModel
+@{
+    ViewData["Title"] = "Посетители";
+}
+
+<style>
+    table {
+        width: 100%; /* Ширина таблицы */
+    }
+
+    td {
+        padding: 20px; /* Поля в ячейках */
+        vertical-align: top; /* Выравнивание по верхнему краю ячеек */
+    }
+</style>
+<span style="color:red">@ViewData["Error"]</span>
+<h1 class="header-text-top">Добавление нового посетителя</h1>
+
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <div class="form">
+            <form method="post" asp-area="" asp-action="AddGuest" asp-controller="Guest">
+                <div asp-validation-summary="All"></div>
+                <table>
+                    <tr style="vertical-align:top">
+                        <td>
+                            <p>
+                                <label asp-for="LastName"></label><br />
+                                <input asp-for="LastName" />
+                            </p>
+                            <p>
+                                <label asp-for="FirstName"></label><br />
+                                <input asp-for="FirstName" />
+                            </p>
+                            <p>
+                                <label asp-for="SurName"></label><br />
+                                <input asp-for="SurName" />
+                            </p>
+                            <p>
+                                <label asp-for="CompanyId"></label><br />
+                                <select asp-for="CompanyId" asp-items="@ViewBag.SelectItemsCompany">
+                                    <option selected=""></option>
+                                </select>
+                            </p>
+                            <p>
+                                <label asp-for="DocumentTypeId"></label><br />
+                                <select asp-for="DocumentTypeId" asp-items="@ViewBag.SelectItemsDocumentType">
+                                </select>
+                            </p>
+                            <p>
+                                <label asp-for="DocumentSerial"></label><br />
+                                <input asp-for="DocumentSerial" />
+                            </p>
+                            <p>
+                                <label asp-for="DocumentNumber"></label><br />
+                                <input asp-for="DocumentNumber" />
+                            </p>
+                        </td>
+                    </tr>
+                </table>
+
+                <p style="padding: 20px">
+                    <input type="submit" value="Сохранить" />
+                    <input type='button' asp-area="Adminka" value='Отменить' onclick='window.location = "@Url.Action("Index","User") ";' />
+                </p>
+            </form>
+
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

@@ -27,5 +27,7 @@ namespace OfficePass.Domain.Entities
         [Display(Name = "Профиль")]
         public UserProfile UserProfile { get; set; }
 
+        public List<Guest> Guests { get; set; }
+
     }
 }

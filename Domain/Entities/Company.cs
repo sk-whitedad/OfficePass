@@ -21,5 +21,6 @@ namespace OfficePass.Domain.Entities
         public string? PhoneNumber { get; set; }
 
         public List<Guest> Guests { get; set; }
+
     }
 }

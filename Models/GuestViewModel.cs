@@ -1,8 +1,8 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace OfficePass.Domain.Entities
+namespace OfficePass.Models
 {
-    public class Guest
+    public class GuestViewModel
     {
         [Required]
         public int Id { get; set; }
@@ -19,25 +19,26 @@ namespace OfficePass.Domain.Entities
         [Display(Name = "Отчество")]
         public string SurName { get; set; }
 
+        [Display(Name = "ФИО")]
+        public string? FullName { get; set; }
+
         [Display(Name = "Серия")]
         public string DocumentSerial { get; set; }
 
         [Display(Name = "Номер")]
         public string DocumentNumber { get; set; }
 
-        public int CompanyId {  get; set; }
+        [Display(Name = "Организация")]
+        public string? CompanyName { get; set; }
 
-        [Display(Name = "Название")]
-        public Company? Company { get; set; }
-
-        public int UserId { get; set; }
-
-        [Display(Name = "Создатель")]
-        public User? User { get; set; }
-
-        public int DocumentTypeId { get; set; }
+        [Display(Name = "Организация")]
+        public int CompanyId { get; set; }
 
         [Display(Name = "Тип документа")]
-        public DocumentType? DocumentType { get; set; }
+        public string? DocumentType { get; set; }
+
+        [Display(Name = "Тип документа")]
+        public int DocumentTypeId { get; set; }
+
     }
 }

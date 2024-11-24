@@ -103,7 +103,6 @@ namespace OfficePass.Services
                     StatusCode = StatusCode.InternalServerError
                 };
             }
-
         }
 
         public IBaseResponse<Company> GetCompanyById(int id)

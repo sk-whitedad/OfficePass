@@ -29,6 +29,19 @@ namespace OfficePass.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "DocumentTypes",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "integer", nullable: false)
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
+                    Name = table.Column<string>(type: "text", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_DocumentTypes", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Groups",
                 columns: table => new
                 {
@@ -67,29 +80,6 @@ namespace OfficePass.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Specializations", x => x.Id);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "Guests",
-                columns: table => new
-                {
-                    Id = table.Column<int>(type: "integer", nullable: false)
-                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
-                    FirstName = table.Column<string>(type: "text", nullable: false),
-                    LastName = table.Column<string>(type: "text", nullable: false),
-                    SurName = table.Column<string>(type: "text", nullable: false),
-                    Document = table.Column<string>(type: "text", nullable: false),
-                    Company_Id = table.Column<int>(type: "integer", nullable: false),
-                    CompanyId = table.Column<int>(type: "integer", nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Guests", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_Guests_Companies_CompanyId",
-                        column: x => x.CompanyId,
-                        principalTable: "Companies",
-                        principalColumn: "Id");
                 });
 
             migrationBuilder.CreateTable(
@@ -151,6 +141,55 @@ namespace OfficePass.Migrations
                         onDelete: ReferentialAction.Cascade);
                 });
 
+            migrationBuilder.CreateTable(
+                name: "Guests",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "integer", nullable: false)
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
+                    FirstName = table.Column<string>(type: "text", nullable: false),
+                    LastName = table.Column<string>(type: "text", nullable: false),
+                    SurName = table.Column<string>(type: "text", nullable: false),
+                    DocumentSerial = table.Column<string>(type: "text", nullable: false),
+                    DocumentNumber = table.Column<string>(type: "text", nullable: false),
+                    CompanyId = table.Column<int>(type: "integer", nullable: false),
+                    UserId = table.Column<int>(type: "integer", nullable: false),
+                    DocumentTypeId = table.Column<int>(type: "integer", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Guests", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Guests_Companies_CompanyId",
+                        column: x => x.CompanyId,
+                        principalTable: "Companies",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_Guests_DocumentTypes_DocumentTypeId",
+                        column: x => x.DocumentTypeId,
+                        principalTable: "DocumentTypes",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_Guests_Users_UserId",
+                        column: x => x.UserId,
+                        principalTable: "Users",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.InsertData(
+                table: "DocumentTypes",
+                columns: new[] { "Id", "Name" },
+                values: new object[,]
+                {
+                    { 1, "Паспорт РФ" },
+                    { 2, "Водительское удостоверение" },
+                    { 3, "Загранпаспорт" },
+                    { 4, "Паспорт моряка" }
+                });
+
             migrationBuilder.InsertData(
                 table: "Groups",
                 columns: new[] { "Id", "Description", "Name" },
@@ -196,6 +235,16 @@ namespace OfficePass.Migrations
                 name: "IX_Guests_CompanyId",
                 table: "Guests",
                 column: "CompanyId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Guests_DocumentTypeId",
+                table: "Guests",
+                column: "DocumentTypeId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Guests_UserId",
+                table: "Guests",
+                column: "UserId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Roles_Name",
@@ -244,10 +293,13 @@ namespace OfficePass.Migrations
                 name: "Guests");
 
             migrationBuilder.DropTable(
-                name: "Users");
+                name: "Companies");
 
             migrationBuilder.DropTable(
-                name: "Companies");
+                name: "DocumentTypes");
+
+            migrationBuilder.DropTable(
+                name: "Users");
 
             migrationBuilder.DropTable(
                 name: "Roles");

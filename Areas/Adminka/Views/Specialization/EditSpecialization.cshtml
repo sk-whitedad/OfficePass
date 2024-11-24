@@ -13,16 +13,25 @@
         vertical-align: top; /* Выравнивание по верхнему краю ячеек */
     }
 </style>
-<span style="color:brown">@ViewData["Error"]</span>
-<h1 class="header-text-top">Редактирование должности</h1>
+<div id="message">
+    <span style="color:brown">@ViewData["Error"]</span>
+    <h1 class="header-text-top">Редактирование должности</h1>
+</div>
+<div id="left_menu">
+    <ul class="nav">
+        <li><a asp-action="Index" asp-controller="UserProfile">Сотрудники</a></li>
+        <li><a asp-action="Index" asp-controller="Group">Подразделения</a></li>
+        <li><a asp-action="Index" asp-controller="Specialization">Должности</a></li>
+    </ul>
+</div>
 
+<div id="content">
 <hr />
-<div class="row">
-    <div class="col-md-4">
+<div>
         <div class="form">
             <form method="post" asp-route-id="@Model.Id" asp-area="Adminka" asp-action="EditSpecialization" asp-controller="Specialization">
                 <div asp-validation-summary="All"></div>
-                <table>
+                <table class="table">
                     <tr style="vertical-align:top">
                         <td>
                             <p>
@@ -46,7 +55,6 @@
         </div>
     </div>
 </div>
-
 
 @section Scripts {
     @{

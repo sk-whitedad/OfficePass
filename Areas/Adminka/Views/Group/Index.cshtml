@@ -3,10 +3,23 @@
 @{
     ViewData["Title"] = "Подразделения";
 }
-<span style="color:brown">@ViewData["Error"]</span>
-<h1 class="header-text-top">Подразделения</h1>
+<div id="message">
+    <span style="color:brown">@ViewData["Error"]</span>
+    <h1 class="header-text-top">Подразделения</h1>
+</div>
 
-<hr />
+<div>
+    <div id="left_menu">
+        <ul class="nav">
+            <li><a asp-action="Index" asp-controller="UserProfile">Сотрудники</a></li>
+            <li><a asp-action="Index" asp-controller="Specialization">Должности</a></li>
+            <li><a asp-action="AddGroup" asp-controller="Group">Добавить подразделение</a></li>
+        </ul>
+    </div>
+
+</div>
+<div id="content">
+    <hr />
 <table class="table">
     <thead>
         <tr>
@@ -37,6 +50,4 @@
 }
     </tbody>
 </table>
-<div>
-    <input type='button' value='Добавить подразделение' onclick='window.location = "@Url.Action("AddGroup","Group") ";' />
 </div>

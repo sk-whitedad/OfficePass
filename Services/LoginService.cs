@@ -78,7 +78,8 @@ namespace OfficePass.Services
             var claims = new List<Claim>
             {
                 new Claim(ClaimsIdentity.DefaultNameClaimType, user.Login),
-                new Claim(ClaimsIdentity.DefaultRoleClaimType, user.Role.Name)
+                new Claim(ClaimsIdentity.DefaultRoleClaimType, user.Role.Name),
+                new Claim("LoginId", user.Id.ToString())
             };
             return new ClaimsIdentity(claims, "ApplicationCookie",
                 ClaimsIdentity.DefaultNameClaimType, ClaimsIdentity.DefaultRoleClaimType);

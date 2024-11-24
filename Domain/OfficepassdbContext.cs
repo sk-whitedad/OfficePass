@@ -13,6 +13,7 @@ namespace OfficePass.Domain
         public virtual DbSet<Guest> Guests { get; set; }
         public virtual DbSet<Group> Groups { get; set; }
         public virtual DbSet<Specialization> Specializations { get; set; }
+        public virtual DbSet<DocumentType> DocumentTypes { get; set; }
 
         public OfficepassdbContext(DbContextOptions<OfficepassdbContext> options)
             : base(options) { }
@@ -65,6 +66,30 @@ namespace OfficePass.Domain
                 RoleId = 1,
                 UserProfileId = 1,
            });
+
+            builder.Entity<DocumentType>().HasData(new DocumentType
+            {
+                Id = 1,
+                Name = "Паспорт РФ"
+            });
+
+            builder.Entity<DocumentType>().HasData(new DocumentType
+            {
+                Id = 2,
+                Name = "Водительское удостоверение"
+            });
+
+            builder.Entity<DocumentType>().HasData(new DocumentType
+            {
+                Id = 3,
+                Name = "Загранпаспорт"
+            });
+
+            builder.Entity<DocumentType>().HasData(new DocumentType
+            {
+                Id = 4,
+                Name = "Паспорт моряка"
+            });
 
         }
     }

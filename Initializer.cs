@@ -18,6 +18,8 @@ namespace OfficePass
             services.AddScoped<CompanyRepository>();
             services.AddScoped<GroupRepository>();
             services.AddScoped<SpecializationRepository>();
+            services.AddScoped<GuestRepository>();
+            services.AddScoped<DocumentTypeRepository>();
 
         }
 
@@ -30,6 +32,8 @@ namespace OfficePass
             services.AddScoped<ICompanyService, CompanyService>();
             services.AddScoped<IGroupService, GroupService>();
             services.AddScoped<ISpecializationService, SpecializationService>();
+            services.AddScoped<IGuestService, GuestService>();
+            services.AddScoped<IDocumentTypeService, DocumentTypeService>();
         }
     }
 }
