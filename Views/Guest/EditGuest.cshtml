@@ -1,0 +1,68 @@
+﻿@model OfficePass.Models.GuestViewModel
+@{
+    ViewData["Title"] = "Посетитель";
+}
+
+<style>
+    table {
+        width: 100%; /* Ширина таблицы */
+    }
+
+    td {
+        padding: 20px; /* Поля в ячейках */
+        vertical-align: top; /* Выравнивание по верхнему краю ячеек */
+    }
+</style>
+<h2>@ViewData["Error"]</h2>
+<h1 class="header-text-top">Редактирование посетителя</h1>
+
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <div class="form">
+            <form method="post" asp-action="EditGuest" asp-controller="Guest">
+                <div asp-validation-summary="All"></div>
+                <table>
+                    <tr style="vertical-align:top">
+                        <td>
+                            <p>
+                                <label asp-for="LastName"></label><br/>
+                                <input asp-for="LastName" placeholder="">
+                            </p>
+                            <p>
+                                <label asp-for="FirstName"></label><br/>
+                                <input asp-for="FirstName" placeholder=""/>
+                            </p>
+                            <p>
+                                <label asp-for="SurName"></label><br />
+                                <input asp-for="SurName" placeholder="">
+                            </p>
+                            <p>
+                                <label asp-for="CompanyId"></label><br />
+                                <select asp-for="CompanyId" asp-items="@ViewBag.SelectItemsCompany"></select>
+                            </p>
+                            <p>
+                                <label asp-for="DocumentTypeId"></label><br />
+                                    <select asp-for="DocumentTypeId" asp-items="@ViewBag.SelectItemsDocument"></select>
+                            </p>
+                            <p>
+                                <label asp-for="DocumentSerial"></label><br />
+                                <input asp-for="DocumentSerial" placeholder="">
+                            </p>
+                            <p>
+                                <label asp-for="DocumentNumber"></label><br />
+                                <input asp-for="DocumentNumber" placeholder="">
+                            </p>
+                        </td>
+                    </tr>
+                </table>
+                
+                <p style="padding: 20px">
+                    <input type="submit" value="Сохранить" />
+                    <input type='button' value='Отменить' onclick='window.location = "@Url.Action("Index","Guest") ";' />
+                </p>
+            </form>
+
+        </div>
+    </div>
+</div>

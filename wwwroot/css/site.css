@@ -130,3 +130,8 @@ ul.nav {
 #bottom_menu {
     max-height: 70px;
 }
+
+main.pb-3 {
+    margin-top: 0px;
+    margin-bottom: 50px;
+}

@@ -7,6 +7,7 @@ using OfficePass.Domain.Entities;
 using OfficePass.Helpers;
 using OfficePass.Models;
 using OfficePass.Services;
+using System.Security.Claims;
 
 namespace OfficePass.Controllers
 {
@@ -83,7 +84,7 @@ namespace OfficePass.Controllers
             if (ModelState.IsValid)
             {
                 var respGuest = await guestService.DublicateGuest(viewModel.DocumentSerial, viewModel.DocumentSerial);
-            
+    
                 var LoginId = int.Parse(HttpContext.User.Claims.FirstOrDefault(i => i.Type == "LoginId").Value);
                 if (respGuest.StatusCode == Enums.StatusCode.OK)
                 {
@@ -111,6 +112,116 @@ namespace OfficePass.Controllers
                 }
             }
             return Redirect(returnUrl);
+        }
+
+        [HttpGet]
+        public IActionResult DeleteGuest(int Id)
+        {
+            var response = guestService.GetGuestById(Id);
+            if (response.StatusCode == Enums.StatusCode.OK)
+            {
+                var viewModel = new GuestViewModel()
+                {
+                    Id = response.Data.Id,
+                    FullName = $"{response.Data.LastName} {response.Data.FirstName} {response.Data.SurName}",
+                    CompanyName = response.Data.Company.Name,
+                    DocumentType = response.Data.DocumentType.Name,
+                    DocumentSerial = response.Data.DocumentSerial,
+                    DocumentNumber = response.Data.DocumentNumber,
+                };
+                return View(viewModel);
+            }
+            return Redirect("Index");
+        }
+
+        [HttpPost]
+        public IActionResult DeleteGuest(GuestViewModel viewModel)
+        {
+            var response = guestService.DeleteGuest(viewModel.Id);
+            if (!response.Result.Data)
+            {
+                return RedirectToAction("Index", "Group", new { err = $"Ошибка: {response.Result.Description}" });
+            }
+            var responseGuest = guestService.GetGuests();
+            if (responseGuest.Result.StatusCode == Enums.StatusCode.OK)
+            {
+                return RedirectToAction("Index", "Guest", new { err = $"Информация: {response.Result.Description}" });
+            }
+            return RedirectToAction("Index", "Guest", new { err = $"Ошибка: {responseGuest.Result.Description}" });
+        }
+
+        [HttpGet]
+        public IActionResult EditGuest(int Id, string? err)
+        {
+            if (err != null)
+                ViewData["Error"] = err;
+
+            var response = guestService.GetGuestById(Id);
+            if (response.StatusCode == Enums.StatusCode.OK)
+            {
+                var viewModel = new GuestViewModel()
+                {
+                    Id = response.Data.Id,
+                    FirstName = response.Data.FirstName,
+                    LastName = response.Data.LastName,
+                    SurName = response.Data.SurName,
+                    DocumentTypeId = response.Data.DocumentTypeId,
+                    CompanyId = response.Data.CompanyId,
+                    DocumentSerial = response.Data.DocumentSerial,
+                    DocumentNumber = response.Data.DocumentNumber,
+                };
+
+                var responseCompany = companyService.GetCompanies();
+                var responseDocumentType = documentTypeService.GetDocumentTypes();
+
+                if (responseCompany.Result.StatusCode == Enums.StatusCode.OK
+                    && responseDocumentType.Result.StatusCode == Enums.StatusCode.OK)
+                {
+                    IEnumerable<Company> sourseCompany = responseCompany.Result.Data;
+                    SelectList selectListCompany;
+                    selectListCompany = new SelectList(sourseCompany, "Id", "Name");
+
+                    IEnumerable<DocumentType> sourseDocumentType = responseDocumentType.Result.Data;
+                    SelectList selectListDocumentType;
+                    selectListDocumentType = new SelectList(sourseDocumentType, "Id", "Name");
+
+                    ViewBag.SelectItemsCompany = selectListCompany;
+                    ViewBag.SelectItemsDocument = selectListDocumentType;
+                    return View(viewModel);
+                }
+            }
+            return Redirect("Index");
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> EditGuest(int id, GuestViewModel viewModel)
+        {
+            if (ModelState.IsValid)
+            {
+                var guest = new Guest()
+                {
+                    Id = viewModel.Id,
+                    FirstName = viewModel.FirstName,
+                    LastName = viewModel.LastName,
+                    SurName = viewModel.SurName,
+                    CompanyId = viewModel.CompanyId,
+                    DocumentTypeId = viewModel.DocumentTypeId,
+                    DocumentSerial = viewModel.DocumentSerial,
+                    DocumentNumber = viewModel.DocumentNumber,
+                };
+                var responseGuest = await guestService.UpdateGuest(guest);
+
+                if (responseGuest.StatusCode == Enums.StatusCode.OK)
+                {
+                    var response = guestService.GetGuests();
+                    if (response.Result.StatusCode == Enums.StatusCode.OK)
+                    {
+                        return RedirectToAction("Index", "Guest", new { err = $"Информация: {responseGuest.Description}" });
+                    }
+                }
+                return RedirectToAction("EditGuest", "Guest", new { err = $"Ошибка: {responseGuest.Description}" });
+            }
+            return RedirectToAction("EditGuest", "Guest", new { err = $"Ошибка валидации" });
         }
 
     }

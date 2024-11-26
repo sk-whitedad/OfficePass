@@ -120,7 +120,10 @@ namespace OfficePass.Services
         {
             try
             {
-                var guest = guestRepository.GetAll().FirstOrDefault(x => x.Id == id);
+                var guest = guestRepository.GetAll()
+                    .Include(x => x.Company)
+                    .Include(x => x.DocumentType)
+                    .FirstOrDefault(x => x.Id == id);
                 if (guest == null)
                 {
                     return new BaseResponse<Guest>()
